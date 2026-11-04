@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080B12">
+<title>SUDOKU</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button id="menuBtn" class="icon-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer">☰</button>
+<header class="top"><span id="levelLabel">FÁCIL</span><span id="timer" aria-label="Tempo de jogo">00:00:00</span></header>
+<main>
+  <div id="board" class="board" role="group" aria-label="Tabuleiro de Sudoku"></div>
+  <div id="pad" class="pad" aria-label="Teclado numérico"></div>
+  <p id="toast" class="toast" role="status" aria-live="polite"></p>
+</main>
+<div id="scrim" class="scrim"></div>
+<nav id="drawer" class="drawer" aria-label="Menu" inert>
+  <h2>SUDOKU</h2>
+  <button data-a="new">Novo Sudoku</button>
+  <div class="seg" role="group" aria-label="Dificuldade">
+    <button data-lv="1">Fácil</button><button data-lv="2">Médio</button><button data-lv="3">Difícil</button>
+  </div>
+  <button data-a="hint">Revelar uma resposta</button>
+  <button data-a="solve">Revelar solução completa</button>
+  <button data-a="print">Imprimir Sudoku</button>
+  <button data-a="check">Verificar erros</button>
+  <button data-a="clear">Apagar meus números</button>
+  <button data-a="notes" id="notesBtn" aria-pressed="false">Modo anotações: desligado</button>
+  <button data-a="how">Como jogar</button>
+  <button data-a="credits">Créditos</button>
+  <p class="credit">DESENVOLVIDO POR<br><a href="https://eliseuangelos.github.io/eliseuangelos/" target="_blank" rel="noopener">ELISEU FERNANDES LAURINDO</a></p>
+</nav>
+<dialog id="dlg"></dialog>
+<div id="printArea" aria-hidden="true"></div>
+<script src="sudoku-engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
