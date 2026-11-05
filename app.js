@@ -51,10 +51,11 @@ function ui(){
     b.setAttribute('aria-label',`Número ${d}, ${c[d]?c[d]+' restantes':'completo'}`);
   });
   $('#progTxt').textContent=`PROGRESSO: ${f} / ${t}`;$('#progBar').style.width=(t?f/t*100:0)+'%';
-  $('#undoBtn').disabled=$('#pu').disabled=S.over||!S.hp;
-  $('#redoBtn').disabled=$('#pr').disabled=S.over||S.hp>=S.h.length;
+  $('#pu').disabled=S.over||!S.hp;
+  $('#pr').disabled=S.over||S.hp>=S.h.length;
 }
-const render=()=>{paint();ui()};
+// um elemento ausente na interface não pode impedir salvar/concluir a partida: erros de ui() só vão para o console
+const render=()=>{paint();try{ui()}catch(e){console.error('ui():',e)}};
 function select(i){if(!S.g||S.busy)return;S.sel=i;render();cells[i].focus({preventScroll:true})}
 
 // ---------- preenchimento, histórico e conclusão ----------
@@ -120,10 +121,11 @@ function sheet(g,ans){
   const cs=g.map((v,i)=>`<i class="${S.f[i]?'':'f'}${i%9%3===2&&i%9<8?' br':''}${(i/9|0)%3===2&&i<72?' bb':''}">${(ans||S.f[i])&&v?v:''}</i>`).join('');
   return `<section class="sheet"><h1>SUDOKU · ${LV[S.lv]}${ans?' · GABARITO':''}</h1><div class="pgrid">${cs}</div></section>`;
 }
-function doPrint(ans){
-  $('#printArea').innerHTML=sheet(S.g.puzzle,false)+(ans?sheet(S.g.solution,true):'');
-  setTimeout(()=>window.print(),60);
-}
+let printAns=false;
+function buildPrint(){$('#printArea').innerHTML=S.g?sheet(S.g.puzzle,false)+(printAns?sheet(S.g.solution,true):''):''}
+function doPrint(ans){printAns=ans;buildPrint();setTimeout(()=>window.print(),60)}
+// Ctrl+P / menu do navegador: a folha é refeita na hora com o Sudoku que está na tela
+addEventListener('beforeprint',buildPrint);addEventListener('afterprint',()=>{printAns=false});
 function printDlg(){
   if(!S.g)return;
   dialog('<h2>IMPRIMIR SUDOKU</h2><p>Escolha o que imprimir (A4, vertical):</p>',
@@ -147,7 +149,7 @@ function make(lv){
   return new Promise(res=>{
     const ok=g=>{clearTimeout(to);res(g)},sync=()=>setTimeout(()=>ok(E.generate(lv)),30),
       to=setTimeout(()=>{if(W)W.terminate();ok(E.fallback(lv))},9000);
-    try{W=new Worker('sudoku-worker.js');W.onmessage=e=>ok(e.data);W.onerror=()=>{clearTimeout(to);sync()};W.postMessage(lv)}
+    try{W=new Worker('sudoku-worker.js?v=10');W.onmessage=e=>ok(e.data);W.onerror=()=>{clearTimeout(to);sync()};W.postMessage(lv)}
     catch(e){clearTimeout(to);sync()}
   });
 }
@@ -169,23 +171,23 @@ function dialog(h,acts=[['Fechar']]){
   dlg.showModal();
 }
 function menu(o){
+  const xb=$('#closeBtn');
+  if(o){xb.hidden=false;void xb.offsetWidth} // mostra o ✕ antes de animar a abertura
   isOpen=o;dr.classList.toggle('open',o);sc.classList.toggle('on',o);dr.inert=!o;
   $('#menuBtn').setAttribute('aria-expanded',o);(o?dr.querySelector('[data-a=new]'):$('#menuBtn')).focus();
+  if(!o)setTimeout(()=>{if(!isOpen)xb.hidden=true},350); // após o fade-out, tira o ✕ da tela
 }
 $('#menuBtn').onclick=()=>menu(true);
 sc.onclick=()=>menu(false);
 dr.onclick=e=>{
   const b=e.target.closest('button');if(!b||b.disabled)return;
   const{a,lv}=b.dataset;
-  if(a==='close')return menu(false);
   if(a==='notes')return toggleNotes();
-  if(a==='undo')return undo();
-  if(a==='redo')return redo();
   menu(false);
   if(lv)return newGame(+lv);
   ({new:()=>newGame(),restart,hint,solve,print:printDlg,check,clear:clearUser,
     how:()=>dialog('<h2>COMO JOGAR</h2><p>Preencha a grade para que cada linha, coluna e bloco 3×3 tenha os números de 1 a 9, sem repetir.</p><p>Toque numa célula e digite o número (ou use o teclado numérico). Setas navegam, Backspace apaga, N liga as anotações, Ctrl+Z desfaz e Ctrl+Y refaz.</p>'),
-    credits:()=>dialog('<h2>CRÉDITOS</h2><p>SUDOKU: desafios gerados localmente, sem dependências externas.</p><p>Desenvolvido por <a href="https://eliseuangelos.github.io" target="_blank" rel="noopener">Eliseu Fernandes Laurindo</a>.</p>')}[a])();
+    credits:()=>dialog('<h2>CRÉDITOS</h2><p>SUDOKU: desafios gerados localmente, sem dependências externas.</p><p>Desenvolvido por <a href="https://eliseuangelos.github.io/" target="_blank" rel="noopener">Eliseu Fernandes Laurindo</a>.</p>')}[a])();
 };
 addEventListener('keydown',e=>{
   if(dlg.open||e.altKey)return;
@@ -213,4 +215,5 @@ dlg.addEventListener('close',()=>{if(S.paused){S.paused=false;G.start(S);run()}}
   Object.assign(S,d);S.sel=S.v.indexOf(0);S.paused=true;lab();tick();render();
   dialog('<h2>PARTIDA SALVA</h2><p>Deseja continuar a partida anterior ou iniciar outra?</p>',[['Continuar',null,'pri'],['Novo Sudoku',()=>newGame(S.lv)]]);
 })();
+$('#closeBtn').addEventListener('click',()=>menu(false)); // botão ✕ flutuante ao lado do menu
 })();
