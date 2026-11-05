@@ -93,4 +93,4 @@ dialog a{color:var(--ac)}
 /* ---------- Menu: botão de fechar (✕) ---------- */
 .dh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .dh h2{margin:4px 0 4px 4px}
-.drawer .x{width:44px;min-width:44px;padding:0;text-align:center;font-size:1.1rem;border-color:var(--ln)}
+.drawer .x{width:44px;min-width:44px;padding:0;text-align:center;font-size:1.1rem;border-color:var(--ln); top: 5px; left: 5px;}

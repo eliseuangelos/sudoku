@@ -51,8 +51,8 @@ function ui(){
     b.setAttribute('aria-label',`Número ${d}, ${c[d]?c[d]+' restantes':'completo'}`);
   });
   $('#progTxt').textContent=`PROGRESSO: ${f} / ${t}`;$('#progBar').style.width=(t?f/t*100:0)+'%';
-  $('#pu').disabled=S.over||!S.hp;
-  $('#pr').disabled=S.over||S.hp>=S.h.length;
+  $('#undoBtn').disabled=$('#pu').disabled=S.over||!S.hp;
+  $('#redoBtn').disabled=$('#pr').disabled=S.over||S.hp>=S.h.length;
 }
 const render=()=>{paint();ui()};
 function select(i){if(!S.g||S.busy)return;S.sel=i;render();cells[i].focus({preventScroll:true})}
@@ -177,12 +177,15 @@ sc.onclick=()=>menu(false);
 dr.onclick=e=>{
   const b=e.target.closest('button');if(!b||b.disabled)return;
   const{a,lv}=b.dataset;
+  if(a==='close')return menu(false);
   if(a==='notes')return toggleNotes();
+  if(a==='undo')return undo();
+  if(a==='redo')return redo();
   menu(false);
   if(lv)return newGame(+lv);
   ({new:()=>newGame(),restart,hint,solve,print:printDlg,check,clear:clearUser,
     how:()=>dialog('<h2>COMO JOGAR</h2><p>Preencha a grade para que cada linha, coluna e bloco 3×3 tenha os números de 1 a 9, sem repetir.</p><p>Toque numa célula e digite o número (ou use o teclado numérico). Setas navegam, Backspace apaga, N liga as anotações, Ctrl+Z desfaz e Ctrl+Y refaz.</p>'),
-    credits:()=>dialog('<h2>CRÉDITOS</h2><p>SUDOKU: desafios gerados localmente, sem dependências externas.</p><p>Desenvolvido por <a href="https://eliseuangelos.github.io/eliseuangelos/" target="_blank" rel="noopener">Eliseu Fernandes Laurindo</a>.</p>')}[a])();
+    credits:()=>dialog('<h2>CRÉDITOS</h2><p>SUDOKU: desafios gerados localmente, sem dependências externas.</p><p>Desenvolvido por <a href="https://eliseuangelos.github.io" target="_blank" rel="noopener">Eliseu Fernandes Laurindo</a>.</p>')}[a])();
 };
 addEventListener('keydown',e=>{
   if(dlg.open||e.altKey)return;
@@ -210,5 +213,4 @@ dlg.addEventListener('close',()=>{if(S.paused){S.paused=false;G.start(S);run()}}
   Object.assign(S,d);S.sel=S.v.indexOf(0);S.paused=true;lab();tick();render();
   dialog('<h2>PARTIDA SALVA</h2><p>Deseja continuar a partida anterior ou iniciar outra?</p>',[['Continuar',null,'pri'],['Novo Sudoku',()=>newGame(S.lv)]]);
 })();
-$('#closeBtn').addEventListener('click',()=>menu(false)); // botão ✕ flutuante ao lado do menu
 })();
