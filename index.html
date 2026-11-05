@@ -10,6 +10,7 @@
 <body>
 <button id="menuBtn" class="icon-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer">☰</button>
 <header class="top"><span id="levelLabel">FÁCIL</span><span id="timer" aria-label="Tempo de jogo">00:00:00</span></header>
+<div class="prog"><span id="progTxt">PROGRESSO: 0 / 0</span><i><b id="progBar"></b></i></div>
 <main>
   <div id="board" class="board" role="group" aria-label="Tabuleiro de Sudoku"></div>
   <div id="pad" class="pad" aria-label="Teclado numérico"></div>
@@ -19,9 +20,12 @@
 <nav id="drawer" class="drawer" aria-label="Menu" inert>
   <h2>SUDOKU</h2>
   <button data-a="new">Novo Sudoku</button>
+  <button data-a="restart">Reiniciar Sudoku atual</button>
   <div class="seg" role="group" aria-label="Dificuldade">
     <button data-lv="1">Fácil</button><button data-lv="2">Médio</button><button data-lv="3">Difícil</button>
   </div>
+  <button data-a="undo" id="undoBtn">Desfazer (Ctrl+Z)</button>
+  <button data-a="redo" id="redoBtn">Refazer (Ctrl+Y)</button>
   <button data-a="hint">Revelar uma resposta</button>
   <button data-a="solve">Revelar solução completa</button>
   <button data-a="print">Imprimir Sudoku</button>
@@ -35,6 +39,7 @@
 <dialog id="dlg"></dialog>
 <div id="printArea" aria-hidden="true"></div>
 <script src="sudoku-engine.js"></script>
+<script src="sudoku-game.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

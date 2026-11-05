@@ -1,4 +1,4 @@
-:root{--bg:#080B12;--bg2:#101725;--sf:#141E2E;--ac:#00E5FF;--ac2:#526FFF;--tx:#F2F7FC;--tx2:#8493A8;--err:#FF526B;--ln:rgba(130,180,210,.18);--s:max(250px,min(94vw,calc(100vh - 250px),600px))}
+:root{--bg:#080B12;--bg2:#101725;--sf:#141E2E;--ac:#00E5FF;--ac2:#526FFF;--tx:#F2F7FC;--tx2:#8493A8;--err:#FF526B;--ln:rgba(130,180,210,.18);--s:max(250px,min(94vw,calc(100vh - 290px),600px))}
 *{box-sizing:border-box;margin:0}
 body{background:radial-gradient(900px 600px at 50% -10%,rgba(82,111,255,.2),transparent 60%),radial-gradient(700px 500px at 95% 110%,rgba(0,229,255,.1),transparent 60%),var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
 button{font:inherit}
@@ -55,6 +55,19 @@ dialog a{color:var(--ac)}
 .acts button{min-height:44px;padding:0 16px;border-radius:10px;border:1px solid var(--ln);background:rgba(0,229,255,.1);color:var(--tx);cursor:pointer;font-size:.9rem}
 .acts button:hover{border-color:var(--ac)}
 @media (prefers-reduced-motion:reduce){*,::before,::after{animation:none!important;transition:none!important}}
+/* ---------- Evolução: progresso, contador, histórico e estados ---------- */
+.prog{display:flex;align-items:center;gap:10px;width:min(var(--s),320px);font-size:.68rem;letter-spacing:.12em;color:var(--tx2);margin-bottom:4px}
+.prog i{flex:1;height:4px;border-radius:4px;background:var(--ln);overflow:hidden}
+.prog b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac2),var(--ac));transition:width .45s ease}
+.pad{display:grid;grid-template-columns:repeat(6,1fr)}
+.pad button{display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.pad small{font-size:.58rem;color:var(--tx2);transition:color .2s}
+.pad button.cur{border-color:var(--ac);background:rgba(0,229,255,.16);box-shadow:0 0 12px rgba(0,229,255,.25)}
+.pad button.done{opacity:.4;border-style:dashed}
+.pad button:disabled,.drawer button:disabled{opacity:.35;cursor:not-allowed}
+.board{transition:opacity .25s,filter .25s}
+.board.busy{opacity:.5;filter:saturate(.5)}
+.board.busy .c{cursor:progress}
 /* ---------- Impressão: estrutura própria (#printArea), A4 vertical, fundo branco ---------- */
 #printArea{display:none}
 @page{size:A4 portrait;margin:15mm}
@@ -70,3 +83,10 @@ dialog a{color:var(--ac)}
   .pgrid i.f{font-weight:400;color:#444}
   .pgrid .br{border-right:1mm solid #000}.pgrid .bb{border-bottom:1mm solid #000}
 }
+/* ---------- Refinos: geração, conclusão e diálogos ---------- */
+.toast.pulse{color:var(--ac);animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.won .c{animation:wave .7s ease-out both;animation-delay:calc(var(--d)*40ms)}
+@keyframes wave{40%{background:rgba(0,229,255,.38);transform:scale(1.08);z-index:2}}
+.acts .pri{background:rgba(0,229,255,.24);border-color:var(--ac)}
+.acts .danger{background:rgba(255,82,107,.16);border-color:var(--err)}
