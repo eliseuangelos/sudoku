@@ -170,13 +170,14 @@ function dialog(h,acts=[['Fechar']]){
 }
 function menu(o){
   isOpen=o;dr.classList.toggle('open',o);sc.classList.toggle('on',o);dr.inert=!o;
-  $('#menuBtn').setAttribute('aria-expanded',o);(o?dr.querySelector('button'):$('#menuBtn')).focus();
+  $('#menuBtn').setAttribute('aria-expanded',o);(o?dr.querySelector('[data-a=new]'):$('#menuBtn')).focus();
 }
 $('#menuBtn').onclick=()=>menu(true);
 sc.onclick=()=>menu(false);
 dr.onclick=e=>{
   const b=e.target.closest('button');if(!b||b.disabled)return;
   const{a,lv}=b.dataset;
+  if(a==='close')return menu(false);
   if(a==='notes')return toggleNotes();
   if(a==='undo')return undo();
   if(a==='redo')return redo();

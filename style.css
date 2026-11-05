@@ -1,4 +1,4 @@
-:root{--bg:#080B12;--bg2:#101725;--sf:#141E2E;--ac:#00E5FF;--ac2:#526FFF;--tx:#F2F7FC;--tx2:#8493A8;--err:#FF526B;--ln:rgba(130,180,210,.18);--s:max(250px,min(94vw,calc(100vh - 290px),600px))}
+:root{--bg:#080B12;--bg2:#101725;--sf:#141E2E;--ac:#00E5FF;--ac2:#526FFF;--tx:#F2F7FC;--tx2:#8493A8;--err:#FF526B;--gr:#39FF14;--ln:rgba(130,180,210,.18);--s:max(250px,min(94vw,calc(100vh - 290px),600px))}
 *{box-sizing:border-box;margin:0}
 body{background:radial-gradient(900px 600px at 50% -10%,rgba(82,111,255,.2),transparent 60%),radial-gradient(700px 500px at 95% 110%,rgba(0,229,255,.1),transparent 60%),var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
 button{font:inherit}
@@ -17,9 +17,9 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;justify-conten
 .same{background:rgba(0,229,255,.2)}
 .sel{background:rgba(0,229,255,.32);box-shadow:inset 0 0 0 2px var(--ac),0 0 18px rgba(0,229,255,.45);z-index:1}
 .giv{color:var(--tx);font-weight:700}
-.usr{color:var(--ac);font-weight:500;animation:pop .18s ease-out}
+.usr{color:var(--gr);text-shadow:0 0 6px rgba(57,255,20,.5);font-weight:500;animation:pop .18s ease-out}
 .rev{color:#9db0ff;font-weight:500;font-style:italic;animation:pop .18s ease-out}
-.err{color:var(--err)!important;background:rgba(255,82,107,.16);box-shadow:inset 0 0 0 2px var(--err);text-decoration:underline wavy}
+.err{color:var(--err)!important;text-shadow:none;background:rgba(255,82,107,.16);box-shadow:inset 0 0 0 2px var(--err);text-decoration:underline wavy}
 .nts{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
 .nts b{display:grid;place-items:center;font-size:calc(var(--s)/45);font-weight:500;color:var(--tx2)}
 .flash{animation:flash .9s ease-out}
@@ -56,7 +56,7 @@ dialog a{color:var(--ac)}
 .acts button:hover{border-color:var(--ac)}
 @media (prefers-reduced-motion:reduce){*,::before,::after{animation:none!important;transition:none!important}}
 /* ---------- Evolução: progresso, contador, histórico e estados ---------- */
-.prog{display:flex;align-items:center;gap:10px;width:min(var(--s),320px);font-size:.68rem;letter-spacing:.12em;color:var(--tx2);margin-bottom:4px}
+.prog{display:flex;align-items:center;gap:10px;width:min(var(--s),320px);font-size:.68rem;letter-spacing:.12em;color:var(--tx2);margin:15px 0 4px}
 .prog i{flex:1;height:4px;border-radius:4px;background:var(--ln);overflow:hidden}
 .prog b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac2),var(--ac));transition:width .45s ease}
 .pad{display:grid;grid-template-columns:repeat(6,1fr)}
@@ -90,3 +90,7 @@ dialog a{color:var(--ac)}
 @keyframes wave{40%{background:rgba(0,229,255,.38);transform:scale(1.08);z-index:2}}
 .acts .pri{background:rgba(0,229,255,.24);border-color:var(--ac)}
 .acts .danger{background:rgba(255,82,107,.16);border-color:var(--err)}
+/* ---------- Menu: botão de fechar (✕) ---------- */
+.dh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.dh h2{margin:4px 0 4px 4px}
+.drawer .x{width:44px;min-width:44px;padding:0;text-align:center;font-size:1.1rem;border-color:var(--ln)}
