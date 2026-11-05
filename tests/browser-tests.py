@@ -38,6 +38,7 @@ try:
     t('barra de progresso afastada do botão de menu', gap >= 12, f'{gap:.1f}px')
     p.click('#menuBtn'); p.click('#closeBtn')
     t('botão ✕ fecha o menu', p.evaluate("!drawer.classList.contains('open')&&drawer.inert"))
+    t('desfazer/refazer só abaixo do tabuleiro (fora do menu)', p.evaluate("!drawer.querySelector('#undoBtn,#redoBtn,[data-a=undo],[data-a=redo]')&&!!document.querySelector('#pu')&&!!document.querySelector('#pr')"))
     t('ícone da aba: link SVG válido e carregável', p.evaluate("(async()=>{const l=document.querySelector('link[rel=icon]');const r=await fetch(l.href);return l.type==='image/svg+xml'&&r.ok&&(await r.text()).includes('<svg')})()"))
     p.keyboard.press('Control+z'); t('Ctrl+Z desfaz', info(p)['prog'] == f'PROGRESSO: 0 / {N}')
     p.keyboard.press('Control+y'); t('Ctrl+Y refaz', info(p)['prog'] == f'PROGRESSO: 1 / {N}')
@@ -78,10 +79,16 @@ try:
          return{sw:document.documentElement.scrollWidth,iw:innerWidth,sq:Math.abs(bb.width-bb.height),dw:Math.max(...W)-Math.min(...W),dh:Math.max(...H)-Math.min(...H),
          clip:cs.filter(c=>c.scrollWidth>c.clientWidth+1||c.scrollHeight>c.clientHeight+1).length,off:R.filter(r=>r.left<-0.5||r.right>innerWidth+0.5).length,cell:Math.round(W[0])}}""")
         t(f'responsivo {w}px: sem rolagem horizontal, células iguais e quadradas, números sem corte', r['sw'] <= r['iw'] and r['sq'] < 1 and r['dw'] < 1 and r['dh'] < 1 and r['clip'] == 0 and r['off'] == 0 and not s2['errs'], f"célula={r['cell']}px")
+        q.click('#menuBtn'); q.wait_for_timeout(450)
+        m = q.evaluate("(()=>{const d=drawer.getBoundingClientRect(),x=closeBtn.getBoundingClientRect();return{gap:Math.round(x.left-d.right),dentro:x.left>=0&&x.right<=innerWidth&&x.top>=0}})()")
+        t(f'botão ✕ flutua à direita do menu e cabe na tela ({w}px)', m['gap'] >= 0 and m['dentro'], f"folga={m['gap']}px")
         q.close()
     q, _ = load(b, 430, 900, reduced_motion='reduce'); i = info(q); e = [k for k, g in enumerate(i['giv']) if not g][0]
     q.click(f'.c >> nth={e}'); q.keyboard.press('1')
     t('prefers-reduced-motion desativa animações', q.evaluate(f"getComputedStyle(document.querySelectorAll('.c')[{e}]).animationName")=='none' and q.evaluate("getComputedStyle(board).animationName")=='none')
+    b2 = pw.chromium.launch(ignore_default_args=['--hide-scrollbars']); q, _ = load(b2, 320, 420); q.click('#menuBtn'); q.wait_for_timeout(450)
+    m = q.evaluate("({rola:drawer.scrollHeight>drawer.clientHeight,barra:drawer.offsetWidth-drawer.clientWidth})")
+    t('menu rola em tela baixa com scrollbar estilizada (10px + borda)', m['rola'] and 10 <= m['barra'] <= 12, str(m)); b2.close()
     b.close()
 finally:
     srv.terminate()
