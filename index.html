@@ -19,14 +19,12 @@
 </main>
 <div id="scrim" class="scrim"></div>
 <nav id="drawer" class="drawer" aria-label="Menu" inert>
-  <div class="dh"><h2>SUDOKU</h2><button id="closeBtn" class="x" data-a="close" aria-label="Fechar menu">✕</button></div>
+  <h2>SUDOKU</h2>
   <button data-a="new">Novo Sudoku</button>
   <button data-a="restart">Reiniciar Sudoku atual</button>
   <div class="seg" role="group" aria-label="Dificuldade">
     <button data-lv="1">Fácil</button><button data-lv="2">Médio</button><button data-lv="3">Difícil</button>
   </div>
-  <button data-a="undo" id="undoBtn">Desfazer (Ctrl+Z)</button>
-  <button data-a="redo" id="redoBtn">Refazer (Ctrl+Y)</button>
   <button data-a="hint">Revelar uma resposta</button>
   <button data-a="solve">Revelar solução completa</button>
   <button data-a="print">Imprimir Sudoku</button>
@@ -37,6 +35,7 @@
   <button data-a="credits">Créditos</button>
   <p class="credit">DESENVOLVIDO POR<br><a href="https://eliseuangelos.github.io/eliseuangelos/" target="_blank" rel="noopener">ELISEU FERNANDES LAURINDO</a></p>
 </nav>
+<button id="closeBtn" class="icon-btn x" aria-label="Fechar menu">✕</button>
 <dialog id="dlg"></dialog>
 <div id="printArea" aria-hidden="true"></div>
 <script src="sudoku-engine.js"></script>
