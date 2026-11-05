@@ -19,7 +19,7 @@
 </main>
 <div id="scrim" class="scrim"></div>
 <nav id="drawer" class="drawer" aria-label="Menu" inert>
-  <h2>SUDOKU</h2>
+  <div class="dh"><h2>SUDOKU</h2><button id="closeBtn" class="x" data-a="close" aria-label="Fechar menu">✕</button></div>
   <button data-a="new">Novo Sudoku</button>
   <button data-a="restart">Reiniciar Sudoku atual</button>
   <div class="seg" role="group" aria-label="Dificuldade">
@@ -35,7 +35,6 @@
   <button data-a="credits">Créditos</button>
   <p class="credit">DESENVOLVIDO POR<br><a href="https://eliseuangelos.github.io/eliseuangelos/" target="_blank" rel="noopener">ELISEU FERNANDES LAURINDO</a></p>
 </nav>
-<button id="closeBtn" class="icon-btn x" aria-label="Fechar menu">✕</button>
 <dialog id="dlg"></dialog>
 <div id="printArea" aria-hidden="true"></div>
 <script src="sudoku-engine.js"></script>
