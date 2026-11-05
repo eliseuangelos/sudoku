@@ -31,6 +31,14 @@ try:
     t('progresso inicial e contadores', i0['prog'] == f'PROGRESSO: 0 / {N}' and len(i0['cnt']) == 9, i0['prog'])
     put(p, emp[0], sol[emp[0]]); i1 = info(p); d = sol[emp[0]]
     t('jogada atualiza progresso e contador do dígito', i1['prog'] == f'PROGRESSO: 1 / {N}' and i1['cnt'][d-1] != i0['cnt'][d-1])
+    try: p.wait_for_function("getComputedStyle(document.querySelector('.c.usr')).color==='rgb(57, 255, 20)'", timeout=2000); verde = True  # espera a transição de cor (.15s)
+    except Exception: verde = False
+    t('número do usuário em verde neon (#39FF14)', verde)
+    gap = p.evaluate("document.querySelector('.prog').getBoundingClientRect().top-menuBtn.getBoundingClientRect().bottom")
+    t('barra de progresso afastada do botão de menu', gap >= 12, f'{gap:.1f}px')
+    p.click('#menuBtn'); p.click('#closeBtn')
+    t('botão ✕ fecha o menu', p.evaluate("!drawer.classList.contains('open')&&drawer.inert"))
+    t('ícone da aba: link SVG válido e carregável', p.evaluate("(async()=>{const l=document.querySelector('link[rel=icon]');const r=await fetch(l.href);return l.type==='image/svg+xml'&&r.ok&&(await r.text()).includes('<svg')})()"))
     p.keyboard.press('Control+z'); t('Ctrl+Z desfaz', info(p)['prog'] == f'PROGRESSO: 0 / {N}')
     p.keyboard.press('Control+y'); t('Ctrl+Y refaz', info(p)['prog'] == f'PROGRESSO: 1 / {N}')
     p.keyboard.press('n'); p.click(f'.c >> nth={emp[1]}'); p.keyboard.press('5')
