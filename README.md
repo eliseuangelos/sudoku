@@ -1,188 +1,121 @@
-
-# 🧩 Sudoku — Desafio de Lógica
+# Sudoku — Desafio de Lógica
 
 <p align="center">
-  <a href="https://eliseuangelos.github.io/sudoku/">
-    <img src="https://img.shields.io/badge/JOGAR-Acessar%20Sudoku-00bfff?style=for-the-badge&logo=github&logoColor=white" alt="Acessar Sudoku">
+  <a href="https://eliseuangelos.github.io/quebra-cabeca/" target="_blank">
+    <img src="https://img.shields.io/badge/ACESSAR_O_JOGO-00D9FF?style=for-the-badge&logo=puzzle&logoColor=050505" alt="Acessar o Sudoku">
   </a>
-  <a href="https://github.com/eliseuangelos/sudoku">
-    <img src="https://img.shields.io/badge/GitHub-Repositório-181717?style=for-the-badge&logo=github" alt="Repositório GitHub">
+  <a href="https://eliseuangelos.github.io/" target="_blank">
+    <img src="https://img.shields.io/badge/SITE_PESSOAL-111827?style=for-the-badge&logo=googlechrome&logoColor=00D9FF" alt="Site Pessoal">
+  </a>
+  <a href="https://github.com/eliseuangelos" target="_blank">
+    <img src="https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+  </a>
+  <a href="https://linkedin.com/in/eliseu-fernandes-laurindo" target="_blank">
+    <img src="https://img.shields.io/badge/LINKEDIN-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
   </a>
 </p>
 
-<p align="center">
-  <strong>Um desafio de raciocínio lógico, concentração e estratégia.</strong>
-</p>
+<p align="center"><strong>Um desafio de raciocínio lógico, concentração e estratégia.</strong></p>
 
 ---
 
-## 📖 Sobre o projeto
+## Sobre o projeto
 
-O **Sudoku — Desafio de Lógica** é uma aplicação web interativa desenvolvida para proporcionar uma experiência digital com o tradicional jogo de Sudoku.
+O **Sudoku — Desafio de Lógica** é uma aplicação web interativa inspirada no tradicional jogo de Sudoku. O tabuleiro 9 × 9 permite iniciar partidas em três níveis de dificuldade, acompanhar o tempo e o progresso e utilizar recursos de apoio durante a resolução.
 
-O projeto permite gerar desafios em diferentes níveis de dificuldade, preencher o tabuleiro, verificar respostas e utilizar recursos de auxílio durante a resolução.
+A aplicação foi organizada para funcionar diretamente no navegador, com interface adaptável a diferentes tamanhos de tela. O jogador pode verificar possíveis erros, registrar anotações, revelar uma resposta ou consultar a solução completa. Também há opções para imprimir o desafio.
 
-Com uma interface moderna, minimalista e responsiva, a aplicação foi desenvolvida para oferecer uma experiência agradável tanto em computadores quanto em dispositivos móveis.
+**Acesse:** [eliseuangelos.github.io/sudoku](https://eliseuangelos.github.io/sudoku/)
 
-🎮 **Acesse e jogue gratuitamente:**
+## Objetivos do site
 
-https://eliseuangelos.github.io/sudoku/
+- Oferecer uma versão digital e acessível do Sudoku tradicional.
+- Estimular raciocínio lógico, concentração, análise e resolução de problemas.
+- Disponibilizar diferentes níveis para atender jogadores com experiências distintas.
+- Permitir que o usuário acompanhe sua partida e utilize recursos de apoio quando necessário.
+- Explorar, como projeto de aprendizagem, a implementação de regras, geração de desafios e interação em JavaScript.
 
----
+## Funcionalidades
 
-## ✨ Funcionalidades
+### Tabuleiro e partida
 
-### 🧩 Tabuleiro interativo
-- Tabuleiro clássico de Sudoku com grade 9 × 9.
-- Seleção e preenchimento de células.
-- Diferenciação entre números originais e valores inseridos.
-- Interface para acompanhar o progresso da partida.
+- Tabuleiro clássico com 9 linhas, 9 colunas e regiões de 3 × 3.
+- Seleção de células e preenchimento com números de 1 a 9.
+- Diferenciação entre valores originais do desafio e números inseridos pelo jogador.
+- Cronômetro e indicador de progresso.
+- Início de um novo Sudoku e reinício da partida atual.
 
-### 🎯 Níveis de dificuldade
-O jogo oferece três níveis:
+### Níveis de dificuldade
 
-- **Fácil:** indicado para quem está começando.
-- **Médio:** exige maior atenção e raciocínio.
-- **Difícil:** apresenta desafios mais complexos.
+- **Fácil:** desafio de entrada para quem está começando.
+- **Médio:** exige maior atenção e análise.
+- **Difícil:** apresenta uma resolução mais exigente.
 
-### 💡 Recursos de auxílio
-- Revelar uma célula com a resposta correta.
+### Recursos de apoio
+
+- Revelar uma resposta correta em uma célula.
 - Consultar a solução completa do desafio.
-- Verificar respostas e identificar possíveis erros.
+- Verificar erros ou possíveis conflitos no preenchimento.
+- Apagar os números inseridos pelo jogador.
+- Ativar o modo de anotações para registrar possibilidades nas células.
+- Consultar instruções de como jogar e informações de créditos.
 
-### 🖨️ Impressão
-Possibilidade de imprimir o Sudoku em diferentes formatos:
+### Impressão
 
-- Somente o desafio, para resolver posteriormente.
-- Desafio acompanhado do gabarito, para consulta.
+A aplicação disponibiliza um comando para imprimir o Sudoku e permitir a resolução fora da tela. O resultado da impressão pode variar conforme as configurações de impressão do navegador.
 
-### 📱 Interface responsiva
-- Layout adaptável a diferentes resoluções.
-- Organização visual para computadores, tablets e smartphones.
-- Navegação intuitiva e interface minimalista.
+## Regras básicas do Sudoku
 
----
+O objetivo é preencher as células vazias com números de 1 a 9, sem repetir valores:
 
-## 🎮 Como jogar
+1. Em cada linha.
+2. Em cada coluna.
+3. Em cada bloco de 3 × 3.
 
-O objetivo do Sudoku é preencher todas as células vazias do tabuleiro com números de 1 a 9, respeitando três regras fundamentais:
+## Tecnologias utilizadas
 
-1. Cada linha deve conter os números de 1 a 9 sem repetição.
-2. Cada coluna deve conter os números de 1 a 9 sem repetição.
-3. Cada bloco de 3 × 3 deve conter os números de 1 a 9 sem repetição.
+| Tecnologia ou recurso | Aplicação |
+|---|---|
+| HTML5 | Estrutura do tabuleiro, controles e diálogos. |
+| CSS3 | Apresentação visual, layout responsivo, estados e impressão. |
+| JavaScript | Interação, regras da partida, cronômetro e recursos de apoio. |
+| Motor de Sudoku | Geração de desafios e avaliação das soluções. |
+| GitHub Pages | Hospedagem estática da aplicação. |
 
-### Passo a passo
+O repositório separa a estrutura da interface, os estilos e a lógica do jogo em arquivos próprios. Entre os arquivos principais estão `index.html`, `style.css`, `app.js` e `sudoku-engine.js`.
 
-1. Acesse o jogo.
-2. Escolha o nível de dificuldade desejado.
+## Como jogar
+
+1. Abra o [Sudoku](https://eliseuangelos.github.io/sudoku/).
+2. Escolha Fácil, Médio ou Difícil no menu.
 3. Inicie uma nova partida.
-4. Selecione uma célula vazia e informe o número correspondente.
-5. Utilize os recursos de verificação e auxílio quando necessário.
-6. Complete o tabuleiro respeitando as regras do Sudoku.
+4. Selecione uma célula vazia e informe o número desejado.
+5. Utilize o modo de anotações para registrar possibilidades, quando necessário.
+6. Verifique o preenchimento e conclua o tabuleiro respeitando as regras do Sudoku.
 
----
+Os recursos de revelação e solução completa são ferramentas de auxílio e podem reduzir o desafio pessoal da partida.
 
-## 🛠️ Tecnologias utilizadas
-
-O projeto foi desenvolvido utilizando tecnologias nativas da web:
-
-| Tecnologia | Aplicação |
-|---|---|
-| HTML5 | Estrutura da aplicação e elementos da interface. |
-| CSS3 | Estilização, identidade visual, animações e responsividade. |
-| JavaScript | Lógica do jogo, geração dos desafios e interatividade. |
-
-### Organização do projeto
-
-O código está organizado em arquivos com responsabilidades específicas:
-
-| Arquivo | Responsabilidade |
-|---|---|
-| `index.html` | Estrutura principal da aplicação. |
-| `style.css` | Estilos e apresentação visual. |
-| `sudoku-engine.js` | Lógica e mecanismos do Sudoku. |
-| `app.js` | Controle da interface e interação com o usuário. |
-| `README.md` | Documentação do projeto. |
-
----
-
-## 🚀 Executar localmente
-
-Para executar o projeto em seu computador:
-
-**1. Clone o repositório:**
+## Execução local
 
 ```bash
 git clone https://github.com/eliseuangelos/sudoku.git
-```
-
-**2. Entre na pasta:**
-
-```bash
 cd sudoku
+python3 -m http.server 8000
 ```
 
-**3. Abra o projeto:**
+Acesse `http://localhost:8000/` no navegador. Também é possível abrir `index.html` diretamente, desde que os arquivos locais do projeto permaneçam na estrutura esperada.
 
-Abra o arquivo `index.html` em um navegador moderno.
+## Sobre o autor
 
-Não é necessário configurar um processo de compilação para a execução da aplicação.
+Sou **Eliseu Fernandes Laurindo**, profissional com experiência em atividades administrativas e operacionais e estudante autodidata de tecnologia. Comecei a estudar HTML e CSS por volta de 2010 e, desde então, mantenho contato com fundamentos de JavaScript. Na adolescência, experimentei estruturas de jogos digitais; mais tarde, atuei como tutor de uma comunidade internacional e multiplataforma de MMORPG, mantive uma fanpage e desenvolvi scripts e calculadoras para auxiliar jogadores.
 
----
+Hoje direciono essa curiosidade para projetos próprios de estudo e utilidade prática, explorando também as possibilidades da inteligência artificial. **Não sou desenvolvedor profissional nem possuo formação acadêmica específica em desenvolvimento de software.** Sou estudante e entusiasta de tecnologia e IA; este Sudoku é uma experiência de aprendizagem e experimentação, com apoio de documentação, testes e ferramentas digitais.
 
-## 🌐 Publicação
-
-O projeto está publicado por meio do GitHub Pages.
-
-**Jogue online:**
-
-https://eliseuangelos.github.io/sudoku/
-
-**Repositório:**
-
-https://github.com/eliseuangelos/sudoku
+- **Projeto:** [Sudoku — Desafio de Lógica](https://eliseuangelos.github.io/sudoku/)
+- **Site pessoal:** [eliseuangelos.github.io](https://eliseuangelos.github.io/)
+- **GitHub:** [github.com/eliseuangelos](https://github.com/eliseuangelos)
+- **LinkedIn:** [linkedin.com/in/eliseu-fernandes-laurindo](https://linkedin.com/in/eliseu-fernandes-laurindo)
 
 ---
 
-## 🎓 Objetivo do projeto
-
-Além de proporcionar entretenimento, o Sudoku estimula habilidades importantes, como:
-
-- Raciocínio lógico.
-- Concentração e atenção.
-- Resolução de problemas.
-- Pensamento estratégico.
-- Reconhecimento de padrões.
-- Tomada de decisões.
-
-O projeto também representa uma iniciativa de aprendizado e desenvolvimento de aplicações web utilizando tecnologias fundamentais da programação.
-
----
-
-## 👨‍💻 Desenvolvedor
-
-**Eliseu Fernandes Laurindo**
-
-Desenvolvedor de projetos digitais e profissional interessado em tecnologia, programação, análise de dados e criação de soluções que facilitem atividades e processos do cotidiano.
-
-🌐 **Site pessoal e profissional:**
-
-https://eliseuangelos.github.io/
-
-💻 **GitHub:**
-
-https://github.com/eliseuangelos
-
-🧩 **Sudoku — Desafio de Lógica:**
-
-https://eliseuangelos.github.io/sudoku/
-
----
-
-<p align="center">
-  <strong>Lógica, tecnologia e criatividade em cada desafio.</strong>
-</p>
-
-<p align="center">
-  © 2026 — Eliseu Fernandes Laurindo. Todos os direitos reservados.
-</p>
+<p align="center"><em>“Quanto mais aumenta nosso conhecimento, mais evidente fica nossa ignorância.”</em><br><strong>John F. Kennedy</strong></p>
