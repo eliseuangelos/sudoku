@@ -1,7 +1,7 @@
 # Sudoku — Desafio de Lógica
 
 <p align="center">
-  <a href="https://eliseuangelos.github.io/quebra-cabeca/" target="_blank">
+  <a href="https://eliseuangelos.github.io/sudoku/" target="_blank">
     <img src="https://img.shields.io/badge/ACESSAR_O_JOGO-00D9FF?style=for-the-badge&logo=puzzle&logoColor=050505" alt="Acessar o Sudoku">
   </a>
   <a href="https://eliseuangelos.github.io/" target="_blank">
