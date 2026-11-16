@@ -58,8 +58,6 @@ main{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;jus
 .icon-btn{position:fixed;top:calc(env(safe-area-inset-top) + (var(--header-height) - 44px)/2);left:var(--space-3);z-index:5;display:grid;place-items:center;width:44px;height:44px;padding:0;border-radius:var(--radius-small);border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-primary);cursor:pointer;transition:border-color var(--motion-fast),background-color var(--motion-fast),opacity var(--motion-standard),transform var(--motion-standard) var(--ease-standard),visibility 0s}
 .icon-btn svg{width:22px;height:22px}
 .icon-btn:hover{border-color:var(--color-action);background:var(--color-surface-secondary)}
-.x{left:calc(var(--dw) + 10px);z-index:12;opacity:0;visibility:hidden;transform:translateX(calc(var(--dw) * -1.02));transition:opacity var(--motion-standard),transform var(--motion-standard) var(--ease-standard),visibility 0s var(--motion-standard)}
-.drawer.open+.x{opacity:1;visibility:visible;transform:none;transition:opacity var(--motion-standard),transform var(--motion-standard) var(--ease-standard),visibility 0s}
 /* botão Dia/Noite: o ícone do sol (#d5dee8 sobre branco = 1,3:1) usa o azul executivo para ter contraste */
 .dn-btn{--dn-fg:var(--color-primary)}
 /* indicadores técnicos */
@@ -85,10 +83,15 @@ main{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;jus
 .scrim.on{opacity:1;pointer-events:auto}
 .drawer{position:fixed;top:0;left:0;bottom:0;z-index:11;width:var(--dw);display:flex;flex-direction:column;overflow-y:auto;padding-bottom:env(safe-area-inset-bottom);background:var(--color-surface);border-right:1px solid var(--color-border);transform:translateX(-102%);transition:transform var(--motion-standard) var(--ease-standard),box-shadow var(--motion-standard);scrollbar-width:thin;scrollbar-color:var(--color-border) transparent}
 .drawer.open{transform:none;box-shadow:var(--shadow-overlay)}
-.drawer-head{flex:none;display:flex;align-items:center;gap:var(--space-3);min-height:var(--header-height);padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--color-border)}
+.drawer-head{position:sticky;top:0;z-index:1;flex:none;display:flex;align-items:center;gap:var(--space-3);min-height:var(--header-height);padding:var(--space-3) var(--space-3) var(--space-3) var(--space-5);background:var(--color-surface);border-bottom:1px solid var(--color-border)}
+.drawer-head>div{min-width:0}
 .drawer-head img{width:32px;height:32px}
 .drawer-head h2{margin:0;font-size:1.125rem}
 .drawer-head small{display:block;font-size:.75rem;line-height:1.3;color:var(--color-text-secondary)}
+/* ✕ de fechar: dentro do .drawer-head, alinhado à direita (acompanha o menu ao abrir/fechar) */
+.drawer .drawer-close{flex:none;display:grid;place-items:center;width:44px;height:44px;min-height:0;margin-left:auto;padding:0;border-color:var(--color-border);color:var(--color-primary)}
+.drawer .drawer-close:hover{border-color:var(--color-action)}
+.drawer-close svg{width:22px;height:22px}
 .grp{display:flex;flex-direction:column;gap:2px;padding:var(--space-4) var(--space-3) 0}
 .grp h3{margin:0;padding:0 var(--space-3) var(--space-1);font-size:.6875rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-secondary)}
 .drawer button{display:flex;align-items:center;gap:var(--space-3);min-height:44px;padding:6px var(--space-3);line-height:1.3;text-align:left;border-radius:var(--radius-small);border:1px solid transparent;background:transparent;color:var(--color-text);font-size:.9375rem;font-weight:500;cursor:pointer;transition:background-color var(--motion-fast),color var(--motion-fast)}
@@ -132,6 +135,27 @@ dialog p+p{margin-top:var(--space-2)}
 .acts .pri{background:var(--color-action);border-color:var(--color-action);color:var(--color-on-action)}
 .acts .pri:hover{background:var(--color-primary);border-color:var(--color-primary)}
 .acts .danger{background:var(--color-danger-soft);border-color:var(--color-danger);color:var(--color-danger)}
+/* pop-up de vitória (usa só os tokens; claro e escuro automáticos) */
+.win{width:min(92vw,400px);padding:28px var(--space-6) var(--space-5);border-top:4px solid var(--color-accent);text-align:center}
+.win[open]{animation:win-in var(--motion-emphasis) var(--ease-standard)}
+.win-seal{display:grid;place-items:center;width:56px;height:56px;margin:0 auto var(--space-4);border:2px solid var(--color-accent);border-radius:50%;background:color-mix(in srgb,var(--color-accent) 12%,var(--color-surface));color:var(--color-accent)}
+.win-seal svg{width:28px;height:28px}
+.win-seal path{stroke-dasharray:24;animation:win-check .5s .25s ease-out backwards}
+.win h2{margin:0;font-size:1.25rem;letter-spacing:.01em;text-wrap:balance}
+.win-stats{display:flex;justify-content:center;gap:var(--space-3);margin-top:var(--space-4)}
+.win-stats div{min-width:112px;padding:var(--space-2) var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-medium);background:var(--color-surface-secondary)}
+.win-stats dt{font-size:.75rem;line-height:1.4;color:var(--color-text-secondary)}
+.win-stats dd{margin:0;font:600 1.0625rem/1.4 var(--font-mono);font-variant-numeric:tabular-nums;color:var(--color-primary)}
+.win-new{margin-top:var(--space-5);padding-top:var(--space-4);border-top:1px solid var(--color-border)}
+.win-new p{margin-bottom:var(--space-2);font-size:.8125rem;font-weight:600;color:var(--color-text-secondary)}
+.win-lv{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2)}
+.win-lv button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-2);min-height:64px;padding:var(--space-2);border:1px solid var(--color-border);border-radius:var(--radius-medium);background:var(--color-surface);color:var(--color-text);font-size:.9375rem;font-weight:600;cursor:pointer;transition:border-color var(--motion-fast),background-color var(--motion-fast)}
+.win-lv button::before{content:"";width:28px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--color-accent) calc(var(--n)*33.4%),var(--color-border) 0)}
+.win-lv button:hover{border-color:var(--color-action);background:var(--color-surface-secondary)}
+.win-close{min-height:44px;margin-top:var(--space-3);padding:0 var(--space-4);border:0;border-radius:var(--radius-small);background:transparent;color:var(--color-action);font-size:.9rem;font-weight:500;cursor:pointer}
+.win-close:hover{background:var(--color-surface-secondary)}
+@keyframes win-in{from{opacity:0;transform:translateY(12px) scale(.96)}}
+@keyframes win-check{from{stroke-dashoffset:24}}
 
 /* 5. jogo: tabuleiro e estados das células ---------------------------- */
 .board{width:var(--s);height:var(--s);display:grid;grid-template-columns:repeat(9,1fr);grid-template-rows:repeat(9,1fr);border:2px solid var(--color-grid);border-radius:var(--radius-medium);overflow:hidden;background:var(--color-surface);box-shadow:var(--shadow-soft);transition:opacity var(--motion-standard),filter var(--motion-standard)}

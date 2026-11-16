@@ -57,6 +57,10 @@ try:
     t('conclusão: mensagem, animação e contadores completos', 'PARABÉNS' in i4['toast'] and i4['won'] and all(c == '✓' for c in i4['cnt']))
     t('cronômetro para após a conclusão', i4['timer'] == i5['timer'], i5['timer'])
     t('partida concluída remove o salvamento', p.evaluate("localStorage.getItem('sudoku.save.v1')") is None)
+    w = p.evaluate("()=>{const d=document.querySelector('#win');return{open:d.open,title:d.querySelector('h2').textContent,btns:[...d.querySelectorAll('[data-wlv]')].map(b=>b.textContent),tempo:winTime.textContent,final:timer.textContent}}")
+    t('conclusão: pop-up PARABÉNS! SUDOKU CONCLUÍDO! com tempo final e novo jogo nas 3 dificuldades', w['open'] and w['title'] == 'PARABÉNS! SUDOKU CONCLUÍDO!' and w['btns'] == ['Fácil', 'Médio', 'Difícil'] and w['tempo'] == w['final'], str(w))
+    p.click('#win button[data-wlv="2"]'); ready(p)
+    t('pop-up: escolher dificuldade inicia novo jogo e fecha o pop-up', p.inner_text('#levelLabel') == 'MÉDIO' and not p.evaluate("document.querySelector('#win').open"), p.inner_text('#levelLabel'))
     p.evaluate("window.__s=0;new MutationObserver(()=>{if(/GERANDO NOVO SUDOKU/.test(toast.textContent))__s=1}).observe(toast,{childList:true,characterData:true,subtree:true});window.__g=0;let l=performance.now();(function f(n){__g=Math.max(__g,n-l);l=n;requestAnimationFrame(f)})(l)")
     p.evaluate("document.querySelector('[data-lv=\"3\"]').click();document.querySelector('[data-lv=\"1\"]').click()"); ready(p); g = info(p)['giv']
     t('geração antiga não substitui pedido mais novo (fácil)', 38 <= sum(1 for x in g if x) <= 45 and p.inner_text('#levelLabel') == 'FÁCIL', str(sum(1 for x in g if x)) + ' pistas')
@@ -80,8 +84,8 @@ try:
          clip:cs.filter(c=>c.scrollWidth>c.clientWidth+1||c.scrollHeight>c.clientHeight+1).length,off:R.filter(r=>r.left<-0.5||r.right>innerWidth+0.5).length,cell:Math.round(W[0])}}""")
         t(f'responsivo {w}px: sem rolagem horizontal, células iguais e quadradas, números sem corte', r['sw'] <= r['iw'] and r['sq'] < 1 and r['dw'] < 1 and r['dh'] < 1 and r['clip'] == 0 and r['off'] == 0 and not s2['errs'], f"célula={r['cell']}px")
         q.click('#menuBtn'); q.wait_for_timeout(450)
-        m = q.evaluate("(()=>{const d=drawer.getBoundingClientRect(),x=closeBtn.getBoundingClientRect();return{gap:Math.round(x.left-d.right),dentro:x.left>=0&&x.right<=innerWidth&&x.top>=0}})()")
-        t(f'botão ✕ flutua à direita do menu e cabe na tela ({w}px)', m['gap'] >= 0 and m['dentro'], f"folga={m['gap']}px")
+        m = q.evaluate("(()=>{const h=document.querySelector('.drawer-head').getBoundingClientRect(),x=closeBtn.getBoundingClientRect(),n=document.querySelector('.drawer-head h2').getBoundingClientRect();return{noHead:!!document.querySelector('.drawer-head #closeBtn'),dir:Math.round(h.right-x.right),semSobrepor:x.left>=n.right,dentro:x.left>=0&&x.right<=innerWidth&&x.top>=h.top&&x.bottom<=h.bottom}})()")
+        t(f'botão ✕ dentro do drawer-head, alinhado à direita, sem sobrepor o título ({w}px)', m['noHead'] and 0 <= m['dir'] <= 16 and m['semSobrepor'] and m['dentro'], str(m))
         q.close()
     q, _ = load(b, 430, 900, reduced_motion='reduce'); i = info(q); e = [k for k, g in enumerate(i['giv']) if not g][0]
     q.click(f'.c >> nth={e}'); q.keyboard.press('1')

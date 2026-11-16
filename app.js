@@ -4,7 +4,7 @@
 'use strict';
 const E=SudokuEngine,G=SudokuGame,$=s=>document.querySelector(s),LV=['','FÁCIL','MÉDIO','DIFÍCIL'];
 const S={sel:-1,notes:false,req:0,busy:false,paused:false,tid:0};
-const boardEl=$('#board'),dlg=$('#dlg'),dr=$('#drawer'),sc=$('#scrim'),pad=$('#pad'),cells=[];
+const boardEl=$('#board'),dlg=$('#dlg'),winDlg=$('#win'),dr=$('#drawer'),sc=$('#scrim'),pad=$('#pad'),cells=[];
 let isOpen=false,tt,W;
 const can=()=>S.g&&!S.over&&!S.busy;
 const save=()=>{if(can())G.save(S)};
@@ -73,11 +73,33 @@ function put(d){
 }
 function undo(){if(can()&&G.undo(S)){S.bad=new Set();render();save()}}
 function redo(){if(can()&&G.redo(S)){S.bad=new Set();render();save()}}
-function win(){if(can()&&G.solved(S))finish('PARABÉNS! SUDOKU CONCLUÍDO.',true)}
+function win(){if(can()&&G.solved(S))finish('PARABÉNS! SUDOKU CONCLUÍDO!',true)}
 function finish(m,ok){
   S.over=true;G.stop(S);clearInterval(S.tid);tick();toast(m,0);G.drop();render();
-  if(ok)boardEl.classList.add('won');
+  if(ok){boardEl.classList.add('won');victory()}
 }
+// ---------- vitória: som sintético (Web Audio, sem arquivos de áudio) e pop-up ----------
+let AC;
+function note(f,t,d,v){                        // timbre de sino: triângulo + harmônico senoidal, ataque rápido, decaimento suave
+  [[f,'triangle',v],[f*2,'sine',v*.35]].forEach(([fr,ty,vol])=>{
+    const o=AC.createOscillator(),g=AC.createGain();o.type=ty;o.frequency.value=fr;
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+    o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.05);
+  });
+}
+function fanfare(){                            // arpejo ascendente de Dó maior + acorde final; falha de áudio nunca interrompe a conclusão
+  try{
+    AC=AC||new(window.AudioContext||window.webkitAudioContext)();AC.resume();
+    const t=AC.currentTime+.05;
+    [523.25,659.25,783.99,1046.5].forEach((f,k)=>note(f,t+k*.13,.45,.16));
+    [523.25,659.25,783.99,1046.5,1318.5].forEach(f=>note(f,t+.62,1.4,.09));
+  }catch(e){}
+}
+function victory(){
+  $('#winTime').textContent=$('#timer').textContent;$('#winLevel').textContent=['','Fácil','Médio','Difícil'][S.lv];
+  fanfare();if(!winDlg.open)winDlg.showModal();
+}
+winDlg.onclick=e=>{const b=e.target.closest('button');if(!b)return;winDlg.close();if(b.dataset.wlv)newGame(+b.dataset.wlv)};
 function toggleNotes(){
   S.notes=!S.notes;const b=$('#notesBtn');
   b.setAttribute('aria-pressed',S.notes);b.textContent='Modo anotações: '+(S.notes?'ligado':'desligado');
@@ -171,16 +193,14 @@ function dialog(h,acts=[['Fechar']]){
   dlg.showModal();
 }
 function menu(o){
-  const xb=$('#closeBtn');
-  if(o){xb.hidden=false;void xb.offsetWidth} // mostra o ✕ antes de animar a abertura
   isOpen=o;dr.classList.toggle('open',o);sc.classList.toggle('on',o);dr.inert=!o;
   $('#menuBtn').setAttribute('aria-expanded',o);(o?dr.querySelector('[data-a=new]'):$('#menuBtn')).focus();
-  if(!o)setTimeout(()=>{if(!isOpen)xb.hidden=true},350); // após o fade-out, tira o ✕ da tela
 }
 $('#menuBtn').onclick=()=>menu(true);
 sc.onclick=()=>menu(false);
 dr.onclick=e=>{
   const b=e.target.closest('button');if(!b||b.disabled)return;
+  if(b.id==='closeBtn')return menu(false);   // ✕ dentro do .drawer-head
   const{a,lv}=b.dataset;
   if(a==='notes')return toggleNotes();
   menu(false);
@@ -190,7 +210,7 @@ dr.onclick=e=>{
     credits:()=>dialog('<h2>CRÉDITOS</h2><p>SUDOKU: desafios gerados localmente, sem dependências externas.</p><p>Desenvolvido por <a href="https://eliseuangelos.github.io/" target="_blank" rel="noopener">Eliseu Fernandes Laurindo</a>.</p>')}[a])();
 };
 addEventListener('keydown',e=>{
-  if(dlg.open||e.altKey)return;
+  if(dlg.open||winDlg.open||e.altKey)return;
   const k=e.key;
   if(e.ctrlKey||e.metaKey){                    // Ctrl+Z desfaz; Ctrl+Y (ou Ctrl+Shift+Z) refaz
     if(isOpen||!/^[zy]$/i.test(k))return;
@@ -215,5 +235,4 @@ dlg.addEventListener('close',()=>{if(S.paused){S.paused=false;G.start(S);run()}}
   Object.assign(S,d);S.sel=S.v.indexOf(0);S.paused=true;lab();tick();render();
   dialog('<h2>PARTIDA SALVA</h2><p>Deseja continuar a partida anterior ou iniciar outra?</p>',[['Continuar',null,'pri'],['Novo Sudoku',()=>newGame(S.lv)]]);
 })();
-$('#closeBtn').addEventListener('click',()=>menu(false)); // botão ✕ flutuante ao lado do menu
 })();
