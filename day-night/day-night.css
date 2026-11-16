@@ -1,0 +1,33 @@
+/*! DAY & NIGHT EXPERIENCE v1.3.0 · estilos · Eliseu Fernandes Laurindo · https://eliseuangelos.github.io/ */
+.dn-btn {
+  --dn-size: 44px;
+  --dn-offset: 16px;
+  --dn-radius: 30%;
+  --dn-fill: currentColor;
+  --dn-stroke: none;
+  --dn-t: .8s;
+  --dn-bg: #ffffff;
+  --dn-fg: #d5dee8;
+  --dn-line: #d5dee8;
+  --dn-bg-dark: #1b2a3a;
+  --dn-fg-dark: #cfe0ff;
+  --dn-line-dark: #cfe0ff;
+}
+.dn-btn{all:unset;box-sizing:border-box;position:relative;display:inline-grid;place-items:center;width:var(--dn-size,48px);height:var(--dn-size,48px);border-radius:var(--dn-radius,50%);cursor:pointer;background:var(--dn-bg,#fff);color:var(--dn-fg,#d5dee8);border:1px solid var(--dn-line,#d5dee8);transition:transform .3s cubic-bezier(.3,1.5,.5,1),border-color var(--dn-t,.6s),background var(--dn-t,.6s),color var(--dn-t,.6s);-webkit-tap-highlight-color:transparent}
+.dn-btn[aria-checked=true]{background:var(--dn-bg-dark,#1b2a3a);color:var(--dn-fg-dark,#cfe0ff);border-color:var(--dn-line-dark,#cfe0ff)}
+.dn-btn:hover{transform:translateY(-2px) scale(1.06)}
+.dn-btn:active{transform:scale(.92)}
+.dn-btn:focus-visible{outline:3px solid var(--dn-focus,#2563eb);outline-offset:3px}
+.dn-btn svg{width:56%;height:56%;overflow:visible;pointer-events:none}
+.dn-btn circle,.dn-moon{fill:var(--dn-fill,currentColor);stroke:var(--dn-stroke,none);stroke-width:2}
+.dn-sun,.dn-moon{transform-origin:12px 12px;transition:transform var(--dn-t,.8s) cubic-bezier(.3,1.4,.5,1),opacity calc(var(--dn-t,.8s) / 2)}
+.dn-btn:hover .dn-sun{transform:rotate(45deg)}
+.dn-btn[aria-checked=true] .dn-sun{transform:rotate(90deg) scale(.2);opacity:0}
+.dn-btn[aria-checked=false] .dn-moon{transform:rotate(-80deg) scale(.2);opacity:0}
+.dn-fixed{position:fixed;z-index:2147482000;margin:var(--dn-offset,16px)}
+.dn-top-right{top:0;right:0}.dn-top-left{top:0;left:0}.dn-bottom-right{bottom:0;right:0}.dn-bottom-left{bottom:0;left:0}
+.dn-scoped.dn-fixed{position:absolute;z-index:6}
+@media (prefers-reduced-motion:reduce){.dn-btn,.dn-btn *{transition:none!important}}
+.dn-stage{position:fixed;inset:0;z-index:2147483000;touch-action:none}
+.dn-stage canvas{display:block;width:100%;height:100%}
+.dn-stage.dn-scoped{position:absolute;z-index:5}
